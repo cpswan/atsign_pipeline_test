@@ -1,10 +1,14 @@
 name: atsign_pipeline_test
-on: [push, pull_request]
+#on: [push, pull_request]
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1
@@ -13,3 +17,39 @@ jobs:
 
       - name: Print github repository
         run: echo ${{ github.repository }}
+  
+  DeployDev:
+    name: Deploy to Dev 
+    if: github.event_name == 'pull_request'
+    needs: [Build]
+    runs-on: ubuntu-latest
+    environment: 
+      name: Development
+      url: 'http://dev.atsign-myapp.com'
+    steps:
+      - name: Deploy
+        run: echo I am deploying! 
+
+  DeployStaging:
+    name: Deploy to Staging 
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    #needs: [Build]
+    runs-on: ubuntu-latest
+    environment: 
+      name: Staging
+      url: 'http://test.atsign-myapp.com'
+    steps:
+      - name: Deploy
+        run: echo I am deploying! 
+
+  DeployProd:
+    name: Deploy to Production 
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    #needs: [DeployStaging]
+    runs-on: ubuntu-latest
+    environment: 
+      name: Production
+      url: 'http://www.atsign-myapp.com                    n'
+    steps:
+      - name: Deploy
+        run: echo I am deploying! 
