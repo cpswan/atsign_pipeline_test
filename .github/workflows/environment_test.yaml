@@ -3,6 +3,8 @@ on:
   push:
     tags:
       - 'v*.*.*'
+    branches:
+      - main
   pull_request:
 
 jobs:
@@ -52,7 +54,7 @@ jobs:
 
   DeployStaging:
     name: Deploy to Staging
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/main')
     needs: [ Build ]
     runs-on: ubuntu-latest
     environment:
@@ -89,7 +91,7 @@ jobs:
 
   DeployProd:
     name: Deploy to Production
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/v')
     needs: [ Build ]
     runs-on: ubuntu-latest
     environment:
