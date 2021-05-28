@@ -1,0 +1,121 @@
+name: atsign_environment_test
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print github repository
+        run: echo ${{ github.repository }}
+
+  DeployDev:
+    name: Deploy to Dev
+    if: github.event_name == 'pull_request'
+    needs: [ Build ]
+    runs-on: ubuntu-latest
+    environment:
+      name: Development
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - name: Deploy
+        run: echo I am deploying!
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      # Install python packages
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install jproperties pyyaml argparse
+
+      - name: Generates configuration file
+        working-directory: at_secondary/at_secondary_server/config
+        run: |
+          echo root_server.url=${{ secrets.root_server_url }} >> config-environment.properties
+          chmod +x generate_config.py
+          python3 generate_config.py -e environment
+
+      - name: Display variables
+        run: dart lib/src/display-variables.dart
+
+  DeployStaging:
+    name: Deploy to Staging
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    needs: [ Build ]
+    runs-on: ubuntu-latest
+    environment:
+      name: Staging
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - name: Deploy
+        run: echo I am deploying!
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      # Install python packages
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install jproperties pyyaml argparse
+
+      - name: Generates configuration file
+        working-directory: at_secondary/at_secondary_server/config
+        run: |
+          echo root_server.url=${{ secrets.root_server_url }} >> config-environment.properties
+          chmod +x generate_config.py
+          python3 generate_config.py -e environment
+
+      - name: Display variables
+        run: dart lib/src/display-variables.dart
+
+  DeployProd:
+    name: Deploy to Production
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    needs: [ Build ]
+    runs-on: ubuntu-latest
+    environment:
+      name: Production
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - name: Deploy
+        run: echo I am deploying!
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      # Install python packages
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install jproperties pyyaml argparse
+
+      - name: Generates configuration file
+        working-directory: at_secondary/at_secondary_server/config
+        run: |
+          echo root_server.url=${{ secrets.root_server_url }} >> config-environment.properties
+          chmod +x generate_config.py
+          python3 generate_config.py -e environment
+
+      - name: Display variables
+        run: dart lib/src/display-variables.dart
+
