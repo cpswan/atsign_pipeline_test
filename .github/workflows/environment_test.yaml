@@ -38,7 +38,7 @@ jobs:
           pip3 install jproperties pyyaml argparse
 
       - name: Generates configuration file
-        working-directory: at_secondary/at_secondary_server/config
+        working-directory: config
         run: |
           echo root_server.url=${{ secrets.root_server_url }} >> config-environment.properties
           chmod +x generate_config.py
@@ -74,7 +74,7 @@ jobs:
           pip3 install jproperties pyyaml argparse
 
       - name: Generates configuration file
-        working-directory: at_secondary/at_secondary_server/config
+        working-directory: config
         run: |
           echo root_server.url=${{ secrets.root_server_url }} >> config-environment.properties
           chmod +x generate_config.py
@@ -110,7 +110,7 @@ jobs:
           pip3 install jproperties pyyaml argparse
 
       - name: Generates configuration file
-        working-directory: at_secondary/at_secondary_server/config
+        working-directory: config
         run: |
           echo root_server.url=${{ secrets.root_server_url }} >> config-environment.properties
           chmod +x generate_config.py
