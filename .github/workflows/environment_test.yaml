@@ -21,11 +21,14 @@ jobs:
       name: Development
     steps:
       - uses: actions/checkout@v2
+
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: stable
-      - name: Deploy
-        run: echo I am deploying!
+
+      - name: Install dart dependencies
+        run: dart pub get
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -59,8 +62,9 @@ jobs:
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: stable
-      - name: Deploy
-        run: echo I am deploying!
+
+      - name: Install dart dependencies
+        run: dart pub get
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -95,8 +99,9 @@ jobs:
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: stable
-      - name: Deploy
-        run: echo I am deploying!
+
+      - name: Install dart dependencies
+        run: dart pub get
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -118,4 +123,3 @@ jobs:
 
       - name: Display variables
         run: dart lib/src/display-variables.dart
-
