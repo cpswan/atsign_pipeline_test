@@ -21,7 +21,7 @@ parser.add_argument("-e", "--env", default='production')
 
 # Read arguments from command line
 environment = parser.parse_args().env
-print('Generating config-base.yaml for ' + environment + ' environment')
+print('Generating config.yaml for ' + environment + ' environment')
 
 # Read properties file
 configs = Properties()
@@ -57,7 +57,7 @@ except OSError as os:
 try:
     with open('config.yaml', 'w') as file:
         documents = yaml.dump(yamlMap, file)
-        print('Generated config-base.yaml file for ' + environment + ' environment successfully.')
+        print('Generated config.yaml file for ' + environment + ' environment successfully.')
     file.close()
 except OSError as os:
     print('Exception occurred: ' + os.filename + ' ' + os.strerror)
