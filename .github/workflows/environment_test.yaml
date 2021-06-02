@@ -49,6 +49,12 @@ jobs:
           chmod +x generate_config.py
           python3 generate_config.py -e environment
 
+      - name: Set version
+        working-directory: config
+        run: |
+          chmod +x version.py
+          python3 version.py -e DEV
+
       - name: Display variables
         run: dart lib/src/display-variables.dart
 
@@ -86,6 +92,12 @@ jobs:
           chmod +x generate_config.py
           python3 generate_config.py -e environment
 
+      - name: Set version
+        working-directory: config
+        run: |
+          chmod +x version.py
+          python3 version.py -e STG
+
       - name: Display variables
         run: dart lib/src/display-variables.dart
 
@@ -122,6 +134,12 @@ jobs:
           echo root_server.url=${{ secrets.root_server_url }} >> config-environment.properties
           chmod +x generate_config.py
           python3 generate_config.py -e environment
+
+      - name: Set version
+        working-directory: config
+        run: |
+          chmod +x version.py
+          python3 version.py -e PROD
 
       - name: Display variables
         run: dart lib/src/display-variables.dart

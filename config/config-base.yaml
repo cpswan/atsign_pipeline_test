@@ -1,2 +1,3 @@
 root_server:
   url: 'test.ve.atsign.zone'
+version: 1.0.0

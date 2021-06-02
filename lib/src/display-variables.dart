@@ -14,4 +14,5 @@ void main() {
   if (root_url == 'production.atsign.org') {
     print('Production Environment: production.atsign.org');
   }
+  print('version :' + configMap['version']);
 }
