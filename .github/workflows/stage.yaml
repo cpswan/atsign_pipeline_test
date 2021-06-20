@@ -192,7 +192,7 @@ jobs:
   push_staging_virtual_env_images:
     # Runs only after functional tests are completed.
     needs: [ run_functional_test ]
-    if: ${{ github.repository == 'atsign-foundation/at_server' && github.event_name == 'push' && contains(github.ref, 'trunk') }}
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     environment: staging
     env:
       working-directory: at_server
@@ -240,7 +240,6 @@ jobs:
           context: at_functional_test/lib/
           tags: |
             atsigncompany/virtualenv:dev_env-narendra
-            atsigncompany/virtualenv:${{ env.BRANCH }}-gha${{ github.run_number }}-narendra
       - name: Image digest of at_virtual_env
         run: echo ${{ steps.docker_build_trunk.outputs.digest }}
         
@@ -311,7 +310,6 @@ jobs:
           tags: |
             atsigncompany/secondary:dev_env-narendra
             atsigncompany/secondary:dess_wtf-narendra
-            atsigncompany/secondary:dev_env-${{ env.BRANCH }}-gha${{ github.run_number }}-narendra
           platforms: |
             linux/amd64
             linux/arm64/v8
@@ -364,14 +362,12 @@ jobs:
           tags: |
             atsigncompany/root:dev_env-narendra
             atsigncompany/root:dess_wtf-narendra
-            atsigncompany/root:dev_env-${{ env.BRANCH }}-gha${{ github.run_number }}-narendra
           platforms: |
             linux/amd64
             linux/arm64/v8
       - name: Image digest of secondary server
         run: echo ${{ steps.docker_build_secondary.outputs.digest }}
-
-
+        
   # Deploy root server image to Stage cluster
   deploy_stage_root_sever:
     name: Deploy to Root Staging 
@@ -388,7 +384,7 @@ jobs:
 
       #Generate kubeconfig file
       - name: Save DigitalOcean kubeconfig with short-lived credentials
-        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ludo
+        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.K8_CLUSTER_NAME }}
 
       #Deploy root image to k8 root deployment
       - name: Deploy to DigitalOcean Kubernetes
