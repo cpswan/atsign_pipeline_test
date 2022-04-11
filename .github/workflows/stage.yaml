@@ -166,7 +166,7 @@ jobs:
       # On push event, upload root server binary for using in deploy job
       - name: upload root server
         if: ${{ github.event_name == 'push' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: root-server
           path: at_root/at_root_server/root
@@ -174,7 +174,7 @@ jobs:
       # On push event, upload secondary server binary for using in deploy job
       - name: upload secondary server
         if: ${{ github.event_name == 'push' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: secondary-server
           path: at_secondary/at_secondary_server/secondary
