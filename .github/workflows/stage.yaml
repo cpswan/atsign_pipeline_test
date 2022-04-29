@@ -209,7 +209,7 @@ jobs:
         uses: docker/setup-qemu-action@v1.2.0
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1.6.0
+        uses: docker/setup-buildx-action@v1.7.0
 
       - name: Login to DockerHub
         uses: docker/login-action@v1.14.1
@@ -268,7 +268,7 @@ jobs:
         uses: docker/setup-qemu-action@v1.2.0
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1.6.0
+        uses: docker/setup-buildx-action@v1.7.0
 
       - name: Login to DockerHub
         uses: docker/login-action@v1.14.1
@@ -339,7 +339,7 @@ jobs:
         run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1.6.0
+        uses: docker/setup-buildx-action@v1.7.0
 
       - name: Login to DockerHub
         uses: docker/login-action@v1.14.1
