@@ -219,14 +219,14 @@ jobs:
 
       # Gets the root server binary generated from the above "build" job.
       - name: Get root server
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: root-server
           path: at_functional_test/lib/root/
 
       # Gets the secondary server binary generated from the above "secondary" job.
       - name: Get secondary server
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: secondary-server
           path: at_functional_test/lib/secondary/
@@ -295,7 +295,7 @@ jobs:
           python3 generate_config.py -e environment
       # Gets the secondary server binary generated from the above "secondary" job.
       - name: Get secondary server
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: secondary-server
           path: at_secondary/at_secondary_server
@@ -347,7 +347,7 @@ jobs:
 
       # Gets the root server binary generated from the above "root" job.
       - name: Get root server
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: root-server
           path: at_root/at_root_server
